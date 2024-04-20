@@ -1,0 +1,114 @@
+body{
+    background-color: rgb(213, 249, 245);
+    margin: 0px;
+    text-align: center;
+}
+
+.navbar{
+    background-color: red;
+    width: 100%;
+    text-align: center;
+    border: 2px solid gray;
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.nav1{
+    flex: 1;
+    border-radius: 5px;
+    border-width: 2px;
+    border-style: groove;
+    max-width: 70px;
+}
+
+.myimg{
+    width: 100%;
+}
+
+
+.nav2{
+    flex: 1;
+    border-radius: 5px;
+    border-width: 2px;
+    border-style: groove;
+    padding: 20px;
+}
+
+
+.btn{
+    background-color: rgb(129, 88, 98);
+    padding: 10px;
+    border-radius: 18px;
+    color: rgb(53, 244, 0);
+    font-weight: bold;
+}
+
+.btn:hover{
+    cursor: pointer;
+    background-color: rgb(170, 146, 152);
+    box-shadow: 1px 1px 1px black;
+}
+
+.btn-class{
+    margin: 10px;
+}
+
+.myName{
+    color: rgb(123, 14, 107);
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.footer{
+    background-color: rgb(60, 211, 161);
+    margin-top: 50px;
+    padding: 20px;
+}
+
+.footer-first{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+
+}
+
+.one{
+    flex: 1;
+    background-color: aquamarine;
+    border-radius: 5px;
+    border-width: 5px;
+    border-style: dashed;
+    border-color: black;
+    padding: 10px;
+}
+.two{
+    flex: 1;
+    background-color: aquamarine;
+    border-radius: 5px;
+    border-width: 5px;
+    border-style: dashed;
+    border-color: black;
+    padding: 10px;
+}
+.three{
+    flex: 1;
+    background-color: aquamarine;
+    border-radius: 5px;
+    border-width: 5px;
+    border-style: dashed;
+    border-color: black;
+    padding: 10px;
+}
+.four{
+    flex: 1;
+    background-color: aquamarine;
+    border-radius: 5px;
+    border-width: 5px;
+    border-style: dashed;
+    border-color: black;
+    padding: 10px;
+}

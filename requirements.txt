@@ -1,0 +1,4 @@
+pyrebase
+pyrebase4
+jwt
+flask
