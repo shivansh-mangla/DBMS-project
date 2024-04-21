@@ -1,80 +1,60 @@
 from flask import Flask, render_template, request, jsonify , redirect
 from database import firebase
+from werkzeug.utils import secure_filename
+import os
+import hashlib
+
 
 app = Flask(__name__)
 
 # SETTING UP AUTHENTICATION
-auth = firebase.auth()
 
 def sign_up():
   name = request.form.get('name')
   roll_number = request.form.get('rollNumber')
   email = request.form.get('email')
   password = request.form.get('password')
+  photo = request.files['profilePhoto']
   try:
-    user = auth.create_user_with_email_and_password(email, password)
-    # Store additional user data in Firebase Database
-    user_data = {
-        "name": name,
-        "roll_number": roll_number,
-        "email": email
-    }
-    db = firebase.database()
-    db.child("users").child(user['localId']).set(user_data)
-    return render_template('login.html' , message = "Sign Up Successful")
+      filename = secure_filename(photo.filename)
+      local_path = os.path.join('uploads', filename)
+      photo.save(local_path)  # Save file locally
+      storage_path = f"profilePhoto/{email}"
     
-  except:
-    return render_template('register.html' , message = "Email already exists")
+      storage = firebase.storage()
+      storage.child(storage_path).put(local_path)
+      # Clean up local file
+      os.remove(local_path)
+
+      # Setting up authentication
+      auth = firebase.auth()
+      user = auth.create_user_with_email_and_password(email, password)
+
+      # Store additional user data in Firebase Database
+      user_data = {
+          "name": name,
+          "roll_number": roll_number,
+          "email": email
+      }
+      db = firebase.database()
+      db.child(email).set(user_data)
+      return render_template('login.html', message="Sign Up Successful")
+
+  except Exception as e:
+      return render_template('register.html', message="Email already exists")
+
 
 
 def login():
   email = request.form.get('email')
   password = request.form.get('password')
   try:
+    auth = firebase.auth()
     user = auth.sign_in_with_email_and_password(email, password)
-    return jsonify({"success": True})
+    return render_template('home.html', message="Login Successful")
 
   except:
     return render_template('login.html' , message = "Invalid Credentials")
-
-
-
-
-"""
-# SETTING UP STORAGE
-storage = firebase.storage()
-
-# uploading a file to storage
-file = input("Enter the file name: ")
-cloudFileName = input("Enter the the name of file for storage: ")
-storage.child(cloudFileName).put(file)
-
-#get url
-print(storage.child(cloudFileName).get_url(None))
-
-#download
-downloadLink = input("Enter download url : ")
-storage.child(downloadLink).download("downloaded.txt")
-
-#read from a file
-path = input("Enter the path of the file: ")
-
-
-
-
-
-
-#USING DATABASE
-db = firebase.database()
-
-#push data
-data = {"name": "Shivansh",
-       "Age" : 20,
-       "Married" : True }
-
-cloudFileName = input("Enter the the name of file for database storage: ")
-db.child(cloudFileName).set(data)
-"""
 
 
 
